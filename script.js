@@ -1,76 +1,87 @@
-// Encrypted secrets for clues
-const secrets = {
-base64_1: "UFBPUlRBTF9BQ0NFU1NfR1JBTlRFRA==", // PORTAL_ACCESS_GRANTED
-caesar_7: "Aopz pz h zhfily av dvysk!", // This is a secret to world!
-base64_2: "L2FkbWluP3VzZXI9YWRtaW4mcGFzcz1sZXRtZWlu" // /admin?user=admin&pass=letmein
-};
-
-// Console Easter Egg
-window.addEventListener('DOMContentLoaded', () => {
-window.decrypt = function() {
-function caesarDecrypt(str, shift) {
-return str.replace(/[A-Za-z]/g, function(c) {
-let code = c.charCodeAt(0);
-let base = (code >= 97) ? 97 : 65;
-return String.fromCharCode(((code - base - shift + 26) % 26) + base);
-});
+body {
+  margin: 0;
+  padding: 0;
+  background: url('ai-art-background.jpg') center/cover no-repeat;
+  color: #e0e6ed;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  position: relative;
+  overflow: hidden;
 }
-document.getElementById('console').innerHTML +=
-"\n> Decrypted Base64: " + atob(secrets.base64_1) +
-"\n> Decrypted Caesar: " + caesarDecrypt(secrets.caesar_7, 7) +
-"\n> Decrypted Path: " + atob(secrets.base64_2);
-};
-console.log("%cTry typing decrypt() in the console. Need help? Google 'Base64 decode' and 'Caesar cipher'.", "color:#60e9ff;font-size:1.1em;");
-});
-
-// Google Drive Picker
-const CLIENT_ID = 'YOUR_GOOGLE_CLIENT_ID';
-const API_KEY = 'YOUR_GOOGLE_API_KEY';
-const APP_ID = 'YOUR_GOOGLE_APP_ID';
-const SCOPES = 'https://www.googleapis.com/auth/drive.readonly';
-
-function onApiLoad() {
-gapi.load('auth', {'callback': onAuthApiLoad});
-gapi.load('picker');
+::selection {
+  background: #60e9ff;
+  color: #181c24;
 }
 
-function onAuthApiLoad() {
-document.getElementById('driveBtn').onclick = function() {
-window.gapi.auth.authorize(
-{
-'client_id': CLIENT_ID,
-'scope': SCOPES,
-'immediate': false
-},
-handleAuthResult
-);
-};
+header {
+  text-align: center;
+  padding: 2rem 1rem;
+  background-color: rgba(0,0,0,0.8);
+  box-shadow: 0 2px 8px #000;
 }
 
-function handleAuthResult(authResult) {
-if (authResult && !authResult.error) {
-createPicker(authResult.access_token);
-}
-}
-
-function createPicker(token) {
-var picker = new google.picker.PickerBuilder()
-.addView(google.picker.ViewId.DOCS)
-.setOAuthToken(token)
-.setDeveloperKey(API_KEY)
-.setAppId(APP_ID)
-.setCallback(function(data) {
-if (data.action == google.picker.Action.PICKED) {
-const file = data.docs[0];
-document.getElementById('console').innerHTML +=
-`\n> Picked file: ${file.name} (${file.url})`;
-}
-})
-.build();
-picker.setVisible(true);
+h1 {
+  color: #60e9ff;
+  font-size: 2.8rem;
+  letter-spacing: 2px;
 }
 
-// Load Google APIs
-window.onload = function() {
-if (window.gapi) onApiLoad();
-};
+nav a {
+  margin: 0 1rem;
+  text-decoration: none;
+  color: #ff4d4d;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+nav a:hover {
+  color: white;
+}
+
+main {
+  max-width: 700px;
+  margin: 2rem auto;
+  background-color: rgba(24,28,36,0.9);
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px #000;
+}
+
+.alert {
+  background: #ffb347;
+  color: #232a34;
+  padding: 1rem;
+  border-radius: 6px;
+  margin-bottom: 2rem;
+  font-weight: bold;
+}
+
+.console, .chatbot {
+  background: #10141a;
+  border-left: 4px solid #60e9ff;
+  padding: 1rem;
+  border-radius: 8px;
+  font-family: 'Fira Mono', monospace;
+  margin-top: 2rem;
+  overflow-x: auto;
+}
+
+#chatInput {
+  width: 100%;
+  margin-top: 1rem;
+  padding: 0.5rem;
+  background: #181c24;
+  border: none;
+  color: #60e9ff;
+  font-size: 1rem;
+}
+
+#matrix {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  color: #60e9ff;
+  font-size: 20px;
+  pointer-events: none;
+  z-index: -1;
+}
