@@ -1,87 +1,34 @@
-body {
-  margin: 0;
-  padding: 0;
-  background: url('ai-art-background.jpg') center/cover no-repeat;
-  color: #e0e6ed;
-  font-family: 'Segoe UI', Arial, sans-serif;
-  position: relative;
-  overflow: hidden;
-}
-::selection {
-  background: #60e9ff;
-  color: #181c24;
-}
+const secrets = {
+  base64_1: "UFBPUlRBTF9BQ0NFU1NfR1JBTlRFRA==", // PORTAL_ACCESS_GRANTED
+  caesar_7: "Aopz pz h zhfily av dvysk!", // This is a secret to world!
+  base64_2: "L2FkbWluP3VzZXI9YWRtaW4mcGFzcz1sZXRtZWlu" // /admin?user=admin&pass=letmein
+};
 
-header {
-  text-align: center;
-  padding: 2rem 1rem;
-  background-color: rgba(0,0,0,0.8);
-  box-shadow: 0 2px 8px #000;
-}
+window.decrypt = function() {
+  function caesarDecrypt(str, shift) {
+    return str.replace(/[A-Za-z]/g, c => {
+      let base = c.charCodeAt(0) >= 97 ? 97 : 65;
+      return String.fromCharCode(((c.charCodeAt(0) - base - shift + 26) % 26) + base);
+    });
+  }
+  document.getElementById('console').innerHTML += `
+  <br>> Base64 Decrypted: ${atob(secrets.base64_1)}
+  <br>> Caesar Decrypted: ${caesarDecrypt(secrets.caesar_7, 7)}
+  <br>> Admin Path: ${atob(secrets.base64_2)}
+  `;
+};
 
-h1 {
-  color: #60e9ff;
-  font-size: 2.8rem;
-  letter-spacing: 2px;
-}
+const responses = {
+  hello: "Hey Analyst. You're cleared for recon.",
+  decrypt: "Try running decrypt(). Base64 and Caesar are key.",
+  help: "Scan logs, check headers, and look behind the curtain."
+};
 
-nav a {
-  margin: 0 1rem;
-  text-decoration: none;
-  color: #ff4d4d;
-  font-weight: bold;
-  transition: color 0.3s ease;
-}
-nav a:hover {
-  color: white;
-}
-
-main {
-  max-width: 700px;
-  margin: 2rem auto;
-  background-color: rgba(24,28,36,0.9);
-  padding: 2rem;
-  border-radius: 10px;
-  box-shadow: 0 4px 12px #000;
-}
-
-.alert {
-  background: #ffb347;
-  color: #232a34;
-  padding: 1rem;
-  border-radius: 6px;
-  margin-bottom: 2rem;
-  font-weight: bold;
-}
-
-.console, .chatbot {
-  background: #10141a;
-  border-left: 4px solid #60e9ff;
-  padding: 1rem;
-  border-radius: 8px;
-  font-family: 'Fira Mono', monospace;
-  margin-top: 2rem;
-  overflow-x: auto;
-}
-
-#chatInput {
-  width: 100%;
-  margin-top: 1rem;
-  padding: 0.5rem;
-  background: #181c24;
-  border: none;
-  color: #60e9ff;
-  font-size: 1rem;
-}
-
-#matrix {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  color: #60e9ff;
-  font-size: 20px;
-  pointer-events: none;
-  z-index: -1;
-}
+document.getElementById('chatInput').addEventListener('keypress', e => {
+  if (e.key === 'Enter') {
+    const input = e.target.value.toLowerCase();
+    const reply = responses[input] || "🤖 SentinelX doesn’t understand that yet.";
+    document.getElementById('chatlog').innerHTML += `<div>> ${input}</div><div>< ${reply}</div>`;
+    e.target.value = '';
+  }
+});
