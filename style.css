@@ -1,0 +1,68 @@
+body {
+background: #181c24;
+color: #e0e6ed;
+font-family: 'Segoe UI', Arial, sans-serif;
+margin: 0;
+padding: 0;
+}
+header {
+background: #232a34;
+padding: 2rem 1rem 1rem 1rem;
+text-align: center;
+box-shadow: 0 2px 8px #0004;
+}
+h1 {
+margin: 0;
+font-size: 2.8rem;
+letter-spacing: 2px;
+color: #60e9ff;
+}
+nav {
+margin-top: 1rem;
+}
+nav a {
+color: #60e9ff;
+text-decoration: none;
+margin: 0 1.5rem;
+font-weight: bold;
+font-size: 1.1rem;
+transition: color 0.2s;
+}
+nav a:hover {
+color: #fff;
+}
+main {
+max-width: 700px;
+margin: 2rem auto;
+background: #232a34;
+border-radius: 10px;
+padding: 2rem;
+box-shadow: 0 2px 16px #0006;
+}
+.alert {
+background: #ffb347;
+color: #232a34;
+padding: 1rem;
+border-radius: 6px;
+margin-bottom: 2rem;
+font-weight: bold;
+box-shadow: 0 1px 4px #0003;
+}
+.console {
+background: #10141a;
+color: #60e9ff;
+font-family: 'Fira Mono', monospace;
+padding: 1rem;
+border-radius: 6px;
+margin-top: 2rem;
+font-size: 1rem;
+min-height: 60px;
+letter-spacing: 1px;
+user-select: text;
+}
+footer {
+text-align: center;
+color: #7b8ca7;
+font-size: 0.95rem;
+margin: 2rem 0 1rem 0;
+}
